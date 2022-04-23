@@ -1,0 +1,127 @@
+--flutter pub run build_runner build
+
+create table users(
+customer_id int primary key ,
+name text,
+joining_date date,
+phoneNo int,
+ref_id1 int,
+ref_id2 int,
+ref_id3 int,
+ref_id4 int,
+ref_id5 int,
+com float
+);
+
+create table comT(
+id int primary key,
+comE int,
+comEName text,
+comF int,
+comFName text,
+CommA float,
+date date
+);
+
+create table PaidCom(
+id int primary key,
+customer_id int,
+name text,
+amt float,
+date date
+);
+
+
+
+create table orderp(
+orderId int primary key,
+name text,
+phone int,
+date date,
+amt int,
+com float
+);
+
+checkUserExist:
+select * from users where phoneNo = :p;
+
+
+insertUserById:
+update users SET com = :com where customer_id = :id;
+
+insertPaidCom:
+insert into PaidCom ( customer_id,name,amt,date) values (:id,:name,:amt,:date);
+
+getPaidCom:
+select * from PaidCom order by date desc;
+
+getUserNameByPhone:
+SELECT *
+FROM users
+where phoneNo = :phone;
+
+getUserNameById:
+SELECT *
+FROM users
+where customer_id = :id;
+
+insertOrderp:
+insert into orderp( name,phone,date,amt,com) values(:name,:phone,:dateT,:amt,:com);
+
+getOrderp:
+select * from orderp;
+
+getOrderpByDateDesc:
+select * from orderp order by date desc;
+
+getOrderpFromTo:
+SELECT * FROM orderp
+WHERE date BETWEEN :from AND :to;
+
+getOrderpOfdate:
+SELECT * FROM orderp
+WHERE date = :date;
+
+getComT:
+select * from comT order by date desc;
+
+getComTjoinUsers:
+select * from comT
+INNER JOIN users ON comT.comF=users.customer_id
+order by date desc;
+
+getComTByUser:
+select * from comT where comE = :comE;
+
+getComTByOneUser:
+select * from comT where comE = :comE group by comE;
+
+getComTByGroupUser:
+select * from comT group by comE;
+
+getComTByGroupDate:
+select * from comT group by date;
+
+getComTByGroupId:
+select * from comT group by id;
+
+insertComT:
+insert into comT(comE,comEName,comF,comFName,CommA,date) values ( :comE ,:comEName, :comF ,:comFName, :CommA,:date);
+
+insertUsers:
+insert into users (name,phoneNo,ref_id1,joining_date,ref_id2,ref_id3,ref_id4,ref_id5,com) values ( :name, :phoneNo ,:ref ,:date, :ref2, :ref3, :ref4, :ref5,0);
+
+getUsers:
+select * from users;
+
+getUsersByHighCom:
+select * from users order by com desc;
+
+getReferById:
+select ref_id1, ref_id2, ref_id3, ref_id4, ref_id5 from users where customer_id = :ref ;
+
+getReferByPhone:
+select ref_id1, ref_id2, ref_id3, ref_id4, ref_id5 from users where phoneNo = :ph ;
+
+getUserByDate:
+select * from users order by joining_date;
